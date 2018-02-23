@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
+import { Router } from "@angular/router";
 
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toPromise';
@@ -23,7 +24,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
   private sub: Subscription;
 
-  constructor(private http: HttpClient, private giphySvc: GiphyService) { }
+  constructor(private http: HttpClient, private giphySvc: GiphyService, private router: Router) { }
 
   ngOnInit() {
     this.subscribeSearchEvent();
@@ -66,6 +67,24 @@ export class ListComponent implements OnInit, OnDestroy {
           });
         }
       });
+  }
+  viewSavedGifs() {
+    console.log('>>> view saved gifs button was clicked');
+    // this.giphySvc.viewSavedGifsEvent.next();
+    this.router.navigate( ['/savedgifs']);
+  }
+
+  saveGiphy(giphy: Giphy){
+    console.log('>>> save gifs button was clicked');
+    this.giphySvc.saveGiphy(giphy)
+      .subscribe(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log("Error occured");
+        }
+      );
   }
 
   ngOnDestroy() {

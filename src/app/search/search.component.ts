@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { GiphyService } from '../giphy.service';
+import { Router } from "@angular/router";
 
 import { QueryStrings } from '../queryStrings';
 
@@ -14,7 +15,7 @@ export class SearchComponent implements OnInit {
   @ViewChild('giphyForm')
   giphyForm: NgForm;
 
-  constructor(private giphySvc: GiphyService) { }
+  constructor(private giphySvc: GiphyService , private router: Router) { }
 
   ngOnInit() {
   }
@@ -29,5 +30,4 @@ export class SearchComponent implements OnInit {
     //default offset = 0
     this.giphySvc.searchEvent.next(giphy);
   }
-
 }
